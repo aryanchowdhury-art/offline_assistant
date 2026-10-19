@@ -1,0 +1,3 @@
+PyQt6>=6.6
+llama-cpp-python>=0.2.90
+pynput>=1.7.6

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline Assistant — Cheat Sheet</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-2: #273449;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #06b6d4;
+    --accent-2: #7c3aed;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --border: #334155;
+    --mono: 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  header h1 {
+    font-size: 2.4em;
+    margin: 0 0 8px;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  header p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 1.05em;
+  }
+
+  section {
+    margin-bottom: 44px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 1.15em;
+    margin: 24px 0 12px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  p { margin: 8px 0; }
+
+  code, kbd {
+    font-family: var(--mono);
+    background: var(--panel-2);
+    color: #fbbf24;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    border: 1px solid var(--border);
+  }
+
+  kbd {
+    color: var(--text);
+    font-size: 0.85em;
+    padding: 3px 8px;
+    box-shadow: 0 2px 0 var(--border);
+  }
+
+  pre {
+    background: #0a0f1a;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.9em;
+    line-height: 1.55;
+    margin: 14px 0;
+    color: #e2e8f0;
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    background: var(--panel);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--panel-2);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.92em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(6, 182, 212, 0.05); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .badge-green { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
+  .badge-yellow { background: rgba(245, 158, 11, 0.2); color: var(--yellow); border: 1px solid var(--yellow); }
+  .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--red); border: 1px solid var(--red); }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+
+  .card-warn {
+    border-left: 4px solid var(--yellow);
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), var(--panel));
+  }
+
+  .card-ok {
+    border-left: 4px solid var(--green);
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), var(--panel));
+  }
+
+  .card-info {
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.08), var(--panel));
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  ul, ol { padding-left: 22px; margin: 10px 0; }
+
+  li { margin: 6px 0; }
+
+  .toc {
+    background: var(--panel);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+  }
+
+  .toc h3 {
+    margin-top: 0;
+    color: var(--muted);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    column-gap: 30px;
+  }
+
+  .toc a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .toc a:hover {
+    color: var(--accent-2);
+    text-decoration: underline;
+  }
+
+  .highlight { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); }
+  .green { color: var(--green); }
+  .yellow { color: var(--yellow); }
+  .red { color: var(--red); }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9em;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 700px) {
+    .toc ul { columns: 1; }
+    header h1 { font-size: 1.7em; }
+    .container { padding: 20px 14px 60px; }
+  }
+
+  @media print {
+    body { background: white; color: #111; }
+    :root { --bg: white; --panel: #f8f9fa; --panel-2: #e9ecef; --text: #111; --muted: #666; --border: #ccc; }
+    header h1 { -webkit-text-fill-color: #333; color: #333; }
+    pre { background: #f5f5f5; color: #111; }
+    code { color: #b45309; }
+    .toc { display: none; }
+    section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Offline Assistant</h1>
+    <p>Cheat Sheet — everything the app can do, and how to ask for it</p>
+  </header>
+
+  <nav class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#launch">Launch</a></li>
+      <li><a href="#memory">Memory queries</a></li>
+      <li><a href="#symbol">Symbol queries</a></li>
+      <li><a href="#regular">Regular questions</a></li>
+      <li><a href="#writes">File writes</a></li>
+      <li><a href="#copilot">Copilot mode</a></li>
+      <li><a href="#menubar">Menu bar</a></li>
+      <li><a href="#files">Files that matter</a></li>
+      <li><a href="#backup">Backing up</a></li>
+      <li><a href="#rebuild">Rebuilding the exe</a></li>
+      <li><a href="#trouble">Troubleshooting</a></li>
+      <li><a href="#trust">Deterministic vs LLM</a></li>
+      <li><a href="#never">What it will never do</a></li>
+    </ul>
+  </nav>
+
+  <!-- LAUNCH -->
+  <section id="launch">
+    <h2>Launch</h2>
+    <table>
+      <tr><th style="width: 30%;">Where</th><th>How</th></tr>
+      <tr><td>Desktop shortcut</td><td>Double-click</td></tr>
+      <tr><td>Exe directly</td><td><code>E:\offline_assistant\dist\OfflineAssistant\OfflineAssistant.exe</code></td></tr>
+      <tr><td>From source</td><td><code>cd E:\offline_assistant</code> then <code>E:\.venv\Scripts\python.exe main.py</code></td></tr>
+    </table>
+  </section>
+
+  <!-- MEMORY -->
+  <section id="memory">
+    <h2>Memory queries</h2>
+    <div class="card card-ok">
+      <span class="badge badge-green">Deterministic</span>
+      &nbsp;Python answers directly. <strong>LLM is bypassed.</strong> These are guaranteed correct.
+    </div>
+    <table>
+      <tr><th style="width: 45%;">You type</th><th>You get</th></tr>
+      <tr><td><code>what do you know about me</code></td><td>Real profile summary</td></tr>
+      <tr><td><code>show my profile</code></td><td>Same</td></tr>
+      <tr><td><code>show my profile as JSON</code></td><td>Real JSON from disk</td></tr>
+      <tr><td><code>who am I</code></td><td>Name + role</td></tr>
+      <tr><td><code>summarize my profile</code></td><td>Summary</td></tr>
+      <tr><td><code>tell me about myself</code></td><td>Summary</td></tr>
+      <tr><td><code>what have you learned about me</code></td><td>Summary + probe answers</td></tr>
+      <tr><td><code>dump my profile</code> / <code>export my data</code></td><td>Summary</td></tr>
+    </table>
+  </section>
+
+  <!-- SYMBOL -->
+  <section id="symbol">
+    <h2>Symbol queries</h2>
+    <div class="card card-ok">
+      <span class="badge badge-green">Deterministic</span>
+      &nbsp;Extracts the real code from disk right now. <strong>No hallucination possible.</strong>
+    </div>
+    <table>
+      <tr><th style="width: 45%;">You type</th><th>You get</th></tr>
+      <tr><td><code>show me the signature of X</code></td><td>Exact signature line(s)</td></tr>
+      <tr><td><code>show me the full source of X</code></td><td>Entire function/class body</td></tr>
+      <tr><td><code>paste the function X</code></td><td>Full source</td></tr>
+      <tr><td><code>give me the definition of X</code></td><td>Full source</td></tr>
+      <tr><td><code>find the class X</code></td><td>Full class source</td></tr>
+    </table>
+    <p class="muted">Where <code>X</code> is a function, method, or class name anywhere in the project. The app walks every <code>.py</code> file, finds the definition, returns the real code.</p>
+
+    <div class="card card-warn">
+      <strong>If <code>X</code> doesn't exist:</strong> you get
+      <em>"<code>X</code> is not defined in any <code>.py</code> file under the current project roots."</em>
+      — never fake code.
+    </div>
+  </section>
+
+  <!-- REGULAR -->
+  <section id="regular">
+    <h2>Regular questions</h2>
+    <div class="card card-warn">
+      <span class="badge badge-yellow">LLM</span>
+      &nbsp;Model answers with the file in context. Usually right, but <strong>can paraphrase</strong>. Not guaranteed exact.
+    </div>
+    <table>
+      <tr><th style="width: 45%;">You type</th><th>You get</th></tr>
+      <tr><td><code>explain what worker.py does</code></td><td>LLM description (file in context)</td></tr>
+      <tr><td><code>how do I do X in PyQt6</code></td><td>LLM answer</td></tr>
+      <tr><td><code>write a fibonacci function</code></td><td>LLM code block</td></tr>
+      <tr><td><code>hello</code> / anything else</td><td>Normal LLM reply</td></tr>
+    </table>
+  </section>
+
+  <!-- WRITES -->
+  <section id="writes">
+    <h2>File writes</h2>
+    <div class="card card-ok">
+      <span class="badge badge-green">Permission required</span>
+      &nbsp;Nothing is ever written without you clicking <strong>Apply</strong>.
+    </div>
+    <table>
+      <tr><th style="width: 45%;">You type</th><th>What happens</th></tr>
+      <tr><td><code>write a file at sandbox/x.py with ... Write the file.</code></td><td>Diff dialog → Apply → file created</td></tr>
+      <tr><td><code>fix the bug in worker.py and write it</code></td><td>Same, for existing file</td></tr>
+    </table>
+  </section>
+
+  <!-- COPILOT -->
+  <section id="copilot">
+    <h2>Copilot mode — <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd></h2>
+
+    <h3>How to use</h3>
+    <ol>
+      <li>Open a file in VS Code (or Notepad).</li>
+      <li>Focus VS Code (click on it).</li>
+      <li>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd>.</li>
+      <li>Type your question in the dialog.</li>
+      <li>Enter.</li>
+    </ol>
+    <p class="muted">If the capture fails, a <strong>file picker</strong> opens — pick any file manually.</p>
+
+    <h3>What it loads</h3>
+    <ul>
+      <li>The active file's full content</li>
+      <li>Its Python imports (one level deep)</li>
+      <li>Any file you mention by name in the question</li>
+    </ul>
+
+    <h3>Tips for a question</h3>
+    <table>
+      <tr><th style="width: 50%;">To do this</th><th>Type this</th></tr>
+      <tr><td>Ask about the current file</td><td><code>explain this file</code></td></tr>
+      <tr><td>Ask about another file by name</td><td><code>summarize worker.py</code></td></tr>
+      <tr><td>Ask about multiple files</td><td><code>compare assistant.py and worker.py</code></td></tr>
+      <tr><td>Use a subpath</td><td><code>read app/ui/worker.py</code></td></tr>
+      <tr><td>Extract a symbol</td><td><code>show me the signature of copilot_process</code></td></tr>
+    </table>
+
+    <div class="card card-info">
+      The chat shows <code>[loaded: file1, file2, ...]</code> — this is proof of what the LLM saw.
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menubar">
+    <h2>Menu bar</h2>
+
+    <h3>Profile</h3>
+    <table>
+      <tr><th style="width: 45%;">Item</th><th>What it does</th></tr>
+      <tr><td><strong>Edit my profile…</strong></td><td>Reopens onboarding with current values</td></tr>
+      <tr><td><strong>Show my profile…</strong></td><td>Prints profile summary into chat</td></tr>
+    </table>
+
+    <h3>Copilot</h3>
+    <table>
+      <tr><th style="width: 45%;">Item</th><th>What it does</th></tr>
+      <tr><td><strong>Help with current file</strong></td><td>Same as <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd></td></tr>
+      <tr><td><strong>Pick a file to analyze…</strong></td><td>Manual file picker</td></tr>
+      <tr><td><strong>Snapshot project outline</strong></td><td>Prints a tree of every file in the project</td></tr>
+      <tr><td><strong>Project → [folder]</strong></td><td>Switch active project</td></tr>
+      <tr><td><strong>Project → Add folder…</strong></td><td>Add a new project root</td></tr>
+      <tr><td><strong>Project → Remove added folders…</strong></td><td>Clean up</td></tr>
+    </table>
+  </section>
+
+  <!-- FILES -->
+  <section id="files">
+    <h2>Files that matter</h2>
+    <table>
+      <tr><th style="width: 55%;">Path</th><th>What it is</th><th>Keep it?</th></tr>
+      <tr>
+        <td><code>E:\offline_assistant\data\user_profile.json</code></td>
+        <td><strong>Your memory. The crown jewel.</strong></td>
+        <td><span class="badge badge-green">Backup</span></td>
+      </tr>
+      <tr>
+        <td><code>E:\offline_assistant\data\chats.db</code></td>
+        <td>Chat history</td>
+        <td class="muted">Optional</td>
+      </tr>
+      <tr>
+        <td><code>E:\offline_assistant\model\*.gguf</code></td>
+        <td>The AI model files</td>
+        <td><span class="badge badge-green">Required</span></td>
+      </tr>
+      <tr>
+        <td><code>E:\offline_assistant\dist\OfflineAssistant\</code></td>
+        <td>The exe + runtime</td>
+        <td><span class="badge badge-green">Portable</span></td>
+      </tr>
+      <tr>
+        <td><code>E:\offline_assistant\app\</code></td>
+        <td>Source code</td>
+        <td class="muted">Only if you edit</td>
+      </tr>
+      <tr>
+        <td><code>E:\offline_assistant\sandbox\</code></td>
+        <td>Scratch space for test files</td>
+        <td class="muted">Optional</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- BACKUP -->
+  <section id="backup">
+    <h2>Backing up</h2>
+    <p>The one file you can't lose:</p>
+    <pre><code>Copy-Item "E:\offline_assistant\data\user_profile.json" `
+          "$env:USERPROFILE\Desktop\user_profile_backup.json"</code></pre>
+    <p class="muted">Do this after every significant session where the assistant learned something new about you.</p>
+  </section>
+
+  <!-- REBUILD -->
+  <section id="rebuild">
+    <h2>Rebuilding the exe</h2>
+    <p>Run this whenever you've edited any <code>.py</code> file:</p>
+    <pre><code>cd E:\offline_assistant
+E:\.venv\Scripts\python.exe -m PyInstaller offline_assistant.spec --noconfirm
+Copy-Item -Recurse -Force "model" "dist\OfflineAssistant\model"
+Copy-Item -Recurse -Force "data"  "dist\OfflineAssistant\data"
+Copy-Item -Force "offline_assistant.ico" "dist\OfflineAssistant\offline_assistant.ico"</code></pre>
+  </section>
+
+  <!-- TROUBLE -->
+  <section id="trouble">
+    <h2>Troubleshooting</h2>
+    <table>
+      <tr><th style="width: 45%;">Symptom</th><th>Fix</th></tr>
+      <tr>
+        <td><strong>"Active window is not a recognized editor"</strong></td>
+        <td>Click on VS Code first, then press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd>. Or click <strong>Help Me</strong> for a file picker.</td>
+      </tr>
+      <tr>
+        <td><strong>"Could not locate X under configured workspace roots"</strong></td>
+        <td>Add the folder via <strong>Copilot → Project → Add folder…</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Copilot hotkey does nothing</strong></td>
+        <td>Only works when VS Code / Notepad is focused. Use <strong>Help Me</strong> button instead.</td>
+      </tr>
+      <tr>
+        <td><strong>Assistant writes fake code</strong></td>
+        <td>Only for symbol queries. If it happens, the file isn't <code>.py</code> or has a syntax error.</td>
+      </tr>
+      <tr>
+        <td><strong>Assistant says "I don't know you"</strong></td>
+        <td>Intercept pattern didn't match. Try <code>what do you know about me</code> verbatim.</td>
+      </tr>
+      <tr>
+        <td><strong>Model says something weird</strong></td>
+        <td>The 3B model sometimes hallucinates. Ask for the same info via <code>show me the signature of X</code> or <code>what do you know about me</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>App won't launch</strong></td>
+        <td>Run from source to see the error: <code>E:\.venv\Scripts\python.exe main.py</code></td>
+      </tr>
+      <tr>
+        <td><strong>Out of RAM</strong></td>
+        <td>Lower <code>n_ctx</code> to 4096 in <code>app/config.py</code>. Rebuild.</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- TRUST -->
+  <section id="trust">
+    <h2>Deterministic vs. LLM</h2>
+    <table>
+      <tr><th style="width: 50%;">Task</th><th>Who answers</th><th>Trust</th></tr>
+      <tr><td>Profile queries</td><td>Python</td><td><span class="badge badge-green">Exact</span></td></tr>
+      <tr><td>Symbol extraction (<code>show me X</code>)</td><td>Python</td><td><span class="badge badge-green">Exact</span></td></tr>
+      <tr><td>Symbol "not found"</td><td>Python</td><td><span class="badge badge-green">Exact</span></td></tr>
+      <tr><td>File writes (after Apply)</td><td>Python</td><td><span class="badge badge-green">Exact</span></td></tr>
+      <tr><td>Snapshot outline</td><td>Python</td><td><span class="badge badge-green">Exact</span></td></tr>
+      <tr><td>"Explain X"</td><td>LLM (with real file)</td><td><span class="badge badge-yellow">Usually right</span></td></tr>
+      <tr><td>Regular chat</td><td>LLM</td><td><span class="badge badge-yellow">Usually right</span></td></tr>
+      <tr><td>Code generation</td><td>LLM</td><td><span class="badge badge-yellow">Verify before use</span></td></tr>
+    </table>
+
+    <div class="card card-info">
+      <strong>Rule of thumb:</strong>
+      if you need <em>exact</em>, use <code>show me</code>.
+      If you need <em>understanding</em>, use <code>explain</code>.
+      If you need <em>creative</em>, just ask.
+    </div>
+  </section>
+
+  <!-- NEVER -->
+  <section id="never">
+    <h2>What the app will never do</h2>
+    <ul>
+      <li>Send anything to the internet</li>
+      <li>Write a file without your click</li>
+      <li>Touch a file outside your configured project roots</li>
+      <li>Remember something you didn't save to <code>user_profile.json</code></li>
+      <li>See your unsaved VS Code edits (use <kbd>Ctrl</kbd>+<kbd>S</kbd> or copy the selection)</li>
+    </ul>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers">
+    <h2>The three numbers to remember</h2>
+    <div class="grid">
+      <div class="card">
+        <div style="font-size: 2.4em; font-weight: 800; color: var(--accent); line-height: 1;">6</div>
+        <div class="muted">recent chat messages injected per prompt</div>
+      </div>
+      <div class="card">
+        <div style="font-size: 2.4em; font-weight: 800; color: var(--accent); line-height: 1;">10</div>
+        <div class="muted">max related files loaded per Copilot call</div>
+      </div>
+      <div class="card">
+        <div style="font-size: 2.4em; font-weight: 800; color: var(--accent); line-height: 1;">200</div>
+        <div class="muted">files listed in a project snapshot</div>
+      </div>
+    </div>
+    <p class="muted">Change any of them in <code>app/config.py</code> if needed.</p>
+  </section>
+
+  <!-- WHEN OFF -->
+  <section id="off">
+    <h2>When something feels off</h2>
+    <ol>
+      <li>Check the terminal — any Python traceback there explains what broke.</li>
+      <li>Look at the <code>[loaded: ...]</code> line in the chat — it shows exactly what files the LLM saw.</li>
+      <li>Ask <code>show my profile as JSON</code> — proves the profile system is alive.</li>
+      <li>Ask <code>show me the signature of &lt;any function you know exists&gt;</code> — proves the extractor works.</li>
+      <li>If all else fails: <code>python main.py</code> from source, paste the error.</li>
+    </ol>
+  </section>
+
+  <footer>
+    Offline Assistant Cheat Sheet &mdash; save this file next to the app and open in any browser.
+  </footer>
+
+</div>
+</body>
+</html>
